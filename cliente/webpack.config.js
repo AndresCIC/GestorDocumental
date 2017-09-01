@@ -5,7 +5,7 @@ module.exports = {
       main: './main.js'
     }, 
 output: {
-    filename: '[name]Component.js',
+    filename: 'generated/[name]Component.js',
 
   },
 
