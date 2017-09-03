@@ -21,10 +21,10 @@ namespace formulario
 
             // e.g. container.RegisterType<ITestService, TestService>();
 
-            container.RegisterType<IEntradasService, EntradasService>(
+            container.RegisterType<IDocumentosService, DocumentosService>(
                 new Interceptor<InterfaceInterceptor>(),
                 new InterceptionBehavior<DBInterceptor>());
-            container.RegisterType<IEntradasRepository, EntradasRepository>();
+            container.RegisterType<IDocumentosRepository, DocumentosRepository>();
 
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

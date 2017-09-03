@@ -23,7 +23,7 @@ namespace formulario
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure el contexto de base de datos y el administrador de usuarios para usar una única instancia por solicitud
-            app.CreatePerOwinContext(ApplicationDbContext.CreateEntradasDB);
+            app.CreatePerOwinContext(ApplicationDbContext.CreateDocumentosDB);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
 
             // Permitir que la aplicación use una cookie para almacenar información para el usuario que inicia sesión

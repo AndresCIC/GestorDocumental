@@ -28,9 +28,9 @@ namespace formulario.Models
         {
         }
 
-        public DbSet<Entrada> Entradas { get; set; }
+        public DbSet<Documento> Documentos { get; set; }
 
-        public static ApplicationDbContext CreateEntradasDB()
+        public static ApplicationDbContext CreateDocumentosDB()
         {
             return new ApplicationDbContext();
         }
