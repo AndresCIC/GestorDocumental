@@ -3,31 +3,36 @@
 		<div id ="FormularioDocumentos">
 			<center>
 				<div class="form-group">
-					<button v-if="!this.isEditable" id="enableEditButton" class="btn btn-primary" v-on:click="buttonEnableEdit">Habilitar edición</button>
-					<button v-else id="enableEditButton" class="btn btn-primary" v-on:click="buttonEnableEdit">Deshabilitar edición</button>
+					<button :disabled="this.isEditable" id="enableEditButton" class="btn btn-primary" v-on:click="buttonEnableEdit">Modificar</button>
+					<button  id="cancelarButton" class="btn btn-primary" v-on:click="buttonCancelar">Cancelar</button>
+
 				</div>
 			</center>
 			<div class="form-group">
 				<label for="Nombre">Título:</label>
-				<input :disabled="!isEditable" class="form-control" v-model="documento.titulo" type="text" id="tituloInput" placeholder="Titulo"></input>
+				<input :disabled="!isEditable" class="form-control" v-model="documento.Titulo" type="text" id="TituloInput" placeholder="Titulo"></input>
 			</div>
 			<div class="form-group">
 				<label>Autor:</label>
-				<input :disabled="!isEditable" class="form-control" type="text" v-model="documento.autor" id="autorInput" placeholder="Autor"></input>
+				<input :disabled="!isEditable" class="form-control" type="text" v-model="documento.Autor" id="AutorInput" placeholder="Autor"></input>
 			</div>
 			<div class="form-group">
 				<div class="col-xs-6">
 					<label>Fecha de creación:</label>
-					<input :disabled="!isEditable" class="form-control" type="date" v-model="documento.creacion" id="creacionInput" ></input>
+					<input :disabled="!isEditable" class="form-control" type="date" v-model="documento.FechaCreacion" id="creacionInput" ></input>
 				</div>
 				<div class="col-xs-6">
 					<label>Última modificación:</label>
-					<input :disabled="!isEditable" class="form-control" type="date" v-model="documento.ultimamodificacion" id="ultimamodificacionInput" ></input>
+					<input :disabled="!isEditable" class="form-control" type="date" v-model="documento.FechaUltimoModificado" id="ultimamodificacionInput" ></input>
 				</div>
 			</div>
 			<div class="form-group">
+				<label>Tamaño:</label>
+				<input :disabled="!isEditable" class="form-control" type="number" v-model="documento.Tamanio" id="tamanioInput" ></input>
+			</div>
+			<div class="form-group">
 				<label>Tipo:</label>
-				<select v-model="documento.tipo" class="form-control" :disabled="!isEditable">
+				<select v-model="documento.Tipo" class="form-control" :disabled="!isEditable">
 					<option value=0>Texto</option>
 					<option value=1>Imagen</option>
 					<option value=2>HTML</option>
@@ -35,13 +40,12 @@
 				</select>
 			</div>
 			<div class="checkbox">
-				<label>	<input :disabled="!isEditable" class="checkbox" type="checkbox" v-model="documento.modificable" id="modificableInput" >Solo lectura</label>
-				<label>	<input :disabled="!isEditable" class="checkbox" type="checkbox" v-model="documento.ultimaversion" id="ultimaversionInput" >Última versión</label>
+				<label>	<input :disabled="!isEditable" class="checkbox" type="checkbox" v-model="documento.SoloLectura" id="modificableInput" >Solo lectura</label>
+				<label>	<input :disabled="!isEditable" class="checkbox" type="checkbox" v-model="documento.VersionFinal" id="ultimaversionInput" >Última versión</label>
 			</div>
 			<center>
 				<div class="form-group">
 					<button  id="acceptButton" :disabled="this.computeAcceptButton" class="btn btn-primary" v-on:click="buttonAccept">Aceptar</button>
-					<button  id="cancelarButton" class="btn btn-primary" v-on:click="buttonCancelar">Cancelar</button>
 					<button  id="borrarButton" :disabled="this.computeDeleteButton" class="btn btn-primary" v-on:click="buttonBorrar">Borrar</button>
 				</div>
 			</center>
@@ -65,27 +69,13 @@
 		data (){
 			return{
 				documento:{
-					titulo:"",
-					autor:"",
-					creacion:"",
-					ultimamodificacion:"",
-					tipo:"",
-					modificable:"",
-					ultimaversion:""
 				},
 				previousDocument:{
-					titulo:"",
-					autor:"",
-					creacion:"",
-					ultimamodificacion:"",
-					tipo:"",
-					modificable:"",
-					ultimaversion:""
 				},
 				isEditable:false,
 				isNew:true,
-				state: constantes.STATE_UPDATE,
-				currentId : 3,
+				state: constantes.STATE_NEW,
+				currentId : "",
 				menuChoice : "Documentos"
 
 
@@ -97,13 +87,13 @@
 					return  true; 
 				}
 				else if(this.state == constantes.STATE_NEW){
-					if(this.documento.titulo==""|| this.documento.autor==""){
+					if(this.documento.Titulo==""|| this.documento.Autor==""){
 						return  true; 
 					}
-					else if(this.documento.creacion == "" || this.documento.ultimamodificacion == ""){
+					else if(this.documento.FechaCreacion == "" || this.documento.FechaUltimoModificado == ""){
 						return  true; 
 					}
-					else if(this.documento.tipo == ""){
+					else if(this.documento.Tipo == "" || this.documento.Tamanio == ""){
 						return  true; 
 					}
 					else{
@@ -111,25 +101,25 @@
 					}
 				}
 				else if(this.state == constantes.STATE_UPDATE){
-					if(this.documento.titulo != this.previousDocument.titulo){
+					if(this.documento.Titulo != this.previousDocument.Titulo){
 						return false;
 					}
-					else if(this.documento.autor != this.previousDocument.autor){
+					else if(this.documento.Autor != this.previousDocument.Autor){
 						return false;
 					}
-					else if(this.documento.creacion != this.previousDocument.creacion){
+					else if(this.documento.FechaCreacion != this.previousDocument.FechaCreacion){
 						return false;
 					}
-					else if(this.documento.ultimamodificacion != this.previousDocument.ultimamodificacion){
+					else if(this.documento.FechaUltimoModificado != this.previousDocument.FechaUltimoModificado){
 						return false;
 					}
-					else if(this.documento.tipo != this.previousDocument.tipo){
+					else if(this.documento.Tipo != this.previousDocument.Tipo){
 						return false;
 					}
-					else if(this.documento.modificable != this.previousDocument.modificable){
+					else if(this.documento.SoloLectura != this.previousDocument.SoloLectura){
 						return false;
 					}
-					else if(this.documento.ultimaversion != this.previousDocument.ultimaversion){
+					else if(this.documento.VersionFinal != this.previousDocument.VersionFinal){
 						return false;
 					}
 					else{return true;}
@@ -148,6 +138,7 @@
 		methods:{
 			buttonEnableEdit: function(){
 				this.isEditable = !this.isEditable;
+				this.previousDocument = $.extend({}, this.documento)
 			},
 			buttonBorrar: function(){
 				if(confirm("¿Está seguro de que quiere borrar?")){
@@ -172,27 +163,40 @@
 				this.makeEmptyData();
 			},
 			buttonAccept: function(){
+
 				if(this.state == constantes.STATE_NEW){
 					// TODO: Crear el objeto datos
 
-					/*
+					
 					$.ajax({url:baseURL + this.menuChoice,
 						method:"POST",
-						data: datos})	
+						data: this.documento})	
 					.done(this.afterPostHandler)
 					.fail(function(){
 						alert("Fallo en la creacion del elemento");
 						//TODO: Gestionar los fallos
 					})
-					*/
+					
 					// TODO: Cuando este hecho, este alert sobra.
-					alert("POST realizado");
 				}
 				else if(this.state == constantes.STATE_UPDATE){
 					// TODO: Se hace un PUT con el objeto
-					alert("PUT realizado");
+					$.ajax({url:constantes.BASE_URL + this.menuChoice + "/" + this.currentId,
+						method:"PUT",
+						data: this.documento})
+					.done(this.putSubmitData)
 				}
 			},
+			afterPostHandler(){
+				alert("Elemento creado");
+				// TODO: Se fuerza un get en el maestro y se cierra el detail.
+				// Podemos llamar al metodo buttonCancelar.
+			},
+			putSubmitData(){
+				alert("PUT realizado");
+				this.previousDocument = $.extend({}, this.documento);
+
+			}, 	
 			makeGetRequest(){
 				$.ajax({
 					url: constantes.BASE_URL + this.menuChoice + "/" + this.currentId,
@@ -205,39 +209,28 @@
 			},
 			makeEmptyData(){
 				this.currentId = "";
-				this.documento.titulo = "";
-				this.documento.autor = "";
-				this.documento.creacion = "";
-				this.documento.ultimamodificacion = "";
-				this.documento.tipo = "";
-				this.documento.ultimaversion = "";
-				this.documento.modificable = "";
+				this.documento.Titulo = "";
+				this.documento.Autor = "";
+				this.documento.FechaCreacion = "";
+				this.documento.FechaUltimoModificado = "";
+				this.documento.Tipo = "";
+				this.documento.Tamanio = "";
+				this.documento.VersionFinal = "";
+				this.documento.SoloLectura = "";
 
-				this.previousDocument.titulo = "";
-				this.previousDocument.autor = "";
-				this.previousDocument.creacion = "";
-				this.previousDocument.ultimamodificacion = "";
-				this.previousDocument.tipo = "";
-				this.previousDocument.ultimaversion = "";
-				this.previousDocument.modificable = "";
+				this.previousDocument.Titulo = "";
+				this.previousDocument.Autor = "";
+				this.previousDocument.FechaCreacion = "";
+				this.previousDocument.FechaUltimoModificado = "";
+				this.previousDocument.Tipo = "";
+				this.previousDocument.Tamanio = "";
+				this.previousDocument.VersionFinal = "";
+				this.previousDocument.SoloLectura = "";
 			},
 			submitGetRequest(datos){
 				this.currentId = datos.Id;
-				this.documento.titulo = datos.Titulo;
-				this.documento.autor = datos.Autor;
-				this.documento.creacion = datos.FechaCreacion;
-				this.documento.ultimamodificacion = datos.FechaUltimoModificado;
-				this.documento.tipo = datos.Tipo;
-				this.documento.ultimaversion = datos.VersionFinal;
-				this.documento.modificable = datos.SoloLectura;
 
-				this.previousDocument.titulo = datos.Titulo;
-				this.previousDocument.autor = datos.Autor;
-				this.previousDocument.creacion = datos.FechaCreacion;
-				this.previousDocument.ultimamodificacion = datos.FechaUltimoModificado;
-				this.previousDocument.tipo = datos.Tipo;
-				this.previousDocument.ultimaversion = datos.VersionFinal;
-				this.previousDocument.modificable = datos.SoloLectura;
+				this.documento = datos; 	
 			}
 			
 		}, 
@@ -247,6 +240,7 @@
 			}
 			else if(this.state == constantes.STATE_NEW){
 				this.makeEmptyData();
+				this.isEditable = true;
 			}
 		}
 	}
