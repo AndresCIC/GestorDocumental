@@ -42,5 +42,11 @@ namespace formulario.Models
             return new ApplicationDbContext();
         }
 
+        public DbSet<Plantilla> Plantillas { get; set; }
+
+        public static ApplicationDbContext CreatePlantillasDB()
+        {
+            return new ApplicationDbContext();
+        }
     }
 }

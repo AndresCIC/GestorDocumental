@@ -271,10 +271,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\PlantillasController.cs" />
     <Compile Include="Controllers\PerfilesUsuariosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\DocumentosController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Plantilla.cs" />
     <Compile Include="PerfilesUsuario.cs" />
     <Compile Include="Documento.cs" />
     <Compile Include="Global.asax.cs">
@@ -284,10 +286,14 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="NoEncontradoException.cs" />
+    <Compile Include="Repository\PlantillasRepository.cs" />
+    <Compile Include="Repository\IPlantillasRepository.cs" />
     <Compile Include="Repository\PerfilesUsuariosRepository.cs" />
     <Compile Include="Repository\DocumentosRepository .cs" />
     <Compile Include="Repository\IPerfilesUsuariosRepository.cs" />
     <Compile Include="Repository\IDocumentosRepository.cs" />
+    <Compile Include="Servicios\PlantillasService.cs" />
+    <Compile Include="Servicios\IPlantillasService.cs" />
     <Compile Include="Servicios\PerfilesUsuariosService.cs" />
     <Compile Include="Servicios\DocumentosService.cs" />
     <Compile Include="Servicios\IPerfilesUsuariosService.cs" />
