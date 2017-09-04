@@ -1,0 +1,8 @@
+- Servidor
+- Hacer un masterDetail bien
+	- Que funcione el acordeon (o con V-if)
+	- Que funcione del todo el detail
+	- Validaciones
+	- Parsear la fecha en el cliente.
+	- 
+- Una vez tengamos bien un masterDetail, copiar y hacer los demas.
