@@ -3,21 +3,20 @@
 		<div id = "Menu">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 			  <li class="nav-item">
-				<a id='Documentos' role="tab" data-toggle="tab" href="#Documentos" class="nav-link active"  v-on:click="chooseMenu('Documentos')">Documentos</a>
+				<a id='Documentos'  data-toggle="tab"  class="nav-link active" href=""  role="tab"  @click="currentView='Documentos'" v-on:click.prevent="">Documentos</a>
 			  </li>
 			  <li class="nav-item">
-				 <a id="Plantillas" class="nav-link" data-toggle="tab" href="#Plantillas" role="tab" v-on:click="chooseMenu('Plantillas')">Plantillas</a>
+				 <a id="Plantillas" class="nav-link" data-toggle="tab" href="" role="tab"  @click="currentView='Plantillas'" v-on:click.prevent="">Plantillas</a>
 			  </li>
 			  <li class="nav-item">
-				<a id="Perfiles" class="nav-link" data-toggle="tab" href="#Perfiles" role="tab" v-on:click="chooseMenu('Perfiles')">Perfiles de usuarios</a>
+				<a id="Perfiles" class="nav-link" data-toggle="tab" href="" role="tab"  @click="currentView='Perfiles'" v-on:click.prevent=""> Perfiles de usuarios</a>
 			  </li>
-			</ul>				
+			</ul>
 
 		</div>
 		<hr>
 		<div class="row">
-			<master :menuChoice="menuChoice" class="col-12"></master>
-			<detail :menuChoice="menuChoice" :currentObject="currentObject"  :previousObject="previousObject" class="col"></detail>
+			<component :is="currentView" class="col-12"></component>
 
 		</div>
 	</div>
@@ -26,22 +25,28 @@
 
 
 <script>
-	import master from './master.vue'
+	import Documentos from './documentosMaster.vue'
+	import Plantillas from  './plantillasMaster.vue'
+	import Perfiles from './perfilesMaster.vue'
 	import detail from './detail.vue'
+
 	import constantes from './constants.js'
 
 
 	export default{
 		components:{
-			master, 
-			detail
+			detail,
+			Documentos,
+			Plantillas,
+			Perfiles
 		},
 		data (){
 			return{
+				currentView: 'Documentos'
 			}
 		},
 		computed:{
-
+			
 		},
 		methods:{
 			anchorClass(tipo){
