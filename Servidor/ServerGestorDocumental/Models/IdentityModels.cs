@@ -35,6 +35,12 @@ namespace formulario.Models
             return new ApplicationDbContext();
         }
 
+        public DbSet<PerfilesUsuario> PerfilesUsuarios { get; set; }
+
+        public static ApplicationDbContext CreatePerfilesUsuariosDB()
+        {
+            return new ApplicationDbContext();
+        }
 
     }
 }

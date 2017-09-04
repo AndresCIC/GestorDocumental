@@ -15,7 +15,7 @@ using System.Web.Http.Cors;
 
 namespace formulario.Controllers
 {
-    [EnableCors(origins: "http://localhost:8080, http://localhost:3000", headers: "*", methods: "*")]
+    [EnableCors(origins: "http://localhost:8080, http://localhost:8081, http://localhost:3000", headers: "*", methods: "*")]
 
     public class DocumentosController : ApiController
     {

@@ -26,6 +26,11 @@ namespace formulario
                 new InterceptionBehavior<DBInterceptor>());
             container.RegisterType<IDocumentosRepository, DocumentosRepository>();
 
+            container.RegisterType<IPerfilesUsuariosService, PerfilesUsuariosService>(
+                new Interceptor<InterfaceInterceptor>(),
+                new InterceptionBehavior<DBInterceptor>());
+            container.RegisterType<IPerfilesUsuariosRepository, PerfilesUsuariosRepository>();
+
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
