@@ -1,6 +1,6 @@
 <template>
-	<div id="Detail" class="detail-div">
-		<div id ="FormularioDocumentos">
+	<div id="Detail" class="container-fluid">
+		<form id ="FormularioDocumentos" class="mx-auto" style="width: 45%">
 			<center>
 				<div class="form-group">
 					<button :disabled="this.isEditable" id="enableEditButton" class="btn btn-primary" v-on:click="buttonEnableEdit">Modificar</button>
@@ -16,14 +16,16 @@
 				<label>Autor:</label>
 				<input :disabled="!isEditable" class="form-control" type="text" v-model="documento.Autor" id="AutorInput" placeholder="Autor"></input>
 			</div>
-			<div class="form-group">
+			<div class="form-group row">
 				<div class="col-xs-6">
 					<label>Fecha de creación:</label>
+					
 					<input :disabled="!isEditable" class="form-control" type="date" v-model="documento.FechaCreacion" id="creacionInput" ></input>
+					
 				</div>
 				<div class="col-xs-6">
 					<label>Última modificación:</label>
-					<input :disabled="!isEditable" class="form-control" type="date" v-model="documento.FechaUltimoModificado" id="ultimamodificacionInput" ></input>
+					<input :disabled="!isEditable" class="form-control" type="date" v-model="documento.FechaUltimoModificado" id="ultimamodificacionInput"></input>
 				</div>
 			</div>
 			<div class="form-group">
@@ -50,7 +52,7 @@
 				</div>
 			</center>
 
-		</div>
+		</form>
 	</div>
 </template>
 

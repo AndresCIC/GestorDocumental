@@ -28,9 +28,11 @@
 </table>
 </template>
 <script type="text/javascript">
+import detail from './detail.vue'
 	export default{
 		name: "Plantillas",
 		components:{
+			detail,
 		},
 		data (){
 			return{
