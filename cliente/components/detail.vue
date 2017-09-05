@@ -75,56 +75,59 @@
 				previousDocument:{
 				},
 				isEditable:false,
-				isNew:true,
-				state: constantes.STATE_NEW,
-				currentId : "",
-				menuChoice : "Documentos"
-
+				menuChoice : "Documentos",
 
 			}
 		},
+		props:[
+		'state',
+		'currentId'
+		],
 		computed:{
-			computeAcceptButton: function(){
-				if(!this.isEditable){
-					return  true; 
-				}
-				else if(this.state == constantes.STATE_NEW){
-					if(this.documento.Titulo==""|| this.documento.Autor==""){
+			computeAcceptButton:{
+				cache: false,
+				get:function(){
+					if(!this.isEditable){
 						return  true; 
 					}
-					else if(this.documento.FechaCreacion == "" || this.documento.FechaUltimoModificado == ""){
-						return  true; 
+					else if(this.state == constantes.STATE_NEW){
+						if(this.documento.Titulo==""|| this.documento.Autor==""){
+							return  true; 
+						}
+						else if(this.documento.FechaCreacion == "" || this.documento.FechaUltimoModificado == ""){
+							return  true; 
+						}
+						else if(this.documento.Tipo == "" || this.documento.Tamanio == ""){
+							return  true; 
+						}
+						else{
+							return false;
+						}
 					}
-					else if(this.documento.Tipo == "" || this.documento.Tamanio == ""){
-						return  true; 
+					else if(this.state == constantes.STATE_UPDATE){
+						if(this.documento.Titulo != this.previousDocument.Titulo){
+							return false;
+						}
+						else if(this.documento.Autor != this.previousDocument.Autor){
+							return false;
+						}
+						else if(this.documento.FechaCreacion != this.previousDocument.FechaCreacion){
+							return false;
+						}
+						else if(this.documento.FechaUltimoModificado != this.previousDocument.FechaUltimoModificado){
+							return false;
+						}
+						else if(this.documento.Tipo != this.previousDocument.Tipo){
+							return false;
+						}
+						else if(this.documento.SoloLectura != this.previousDocument.SoloLectura){
+							return false;
+						}
+						else if(this.documento.VersionFinal != this.previousDocument.VersionFinal){
+							return false;
+						}
+						else{return true;}
 					}
-					else{
-						return false;
-					}
-				}
-				else if(this.state == constantes.STATE_UPDATE){
-					if(this.documento.Titulo != this.previousDocument.Titulo){
-						return false;
-					}
-					else if(this.documento.Autor != this.previousDocument.Autor){
-						return false;
-					}
-					else if(this.documento.FechaCreacion != this.previousDocument.FechaCreacion){
-						return false;
-					}
-					else if(this.documento.FechaUltimoModificado != this.previousDocument.FechaUltimoModificado){
-						return false;
-					}
-					else if(this.documento.Tipo != this.previousDocument.Tipo){
-						return false;
-					}
-					else if(this.documento.SoloLectura != this.previousDocument.SoloLectura){
-						return false;
-					}
-					else if(this.documento.VersionFinal != this.previousDocument.VersionFinal){
-						return false;
-					}
-					else{return true;}
 				}
 			},
 			computeDeleteButton: function(){
@@ -135,7 +138,7 @@
 					return false;
 				}
 				else {return true};
-			}
+			},
 		},
 		methods:{
 			buttonEnableEdit: function(){
@@ -155,6 +158,7 @@
 			},
 			buttonCancelar: function(){
 				// TODO: Cancel method
+				this.$emit('cancelDetail', true);
 				// Envia un eventbus o un emit al master para que cierre el detail
 
 				// Habrá que poner una variable a "" o algo.
@@ -167,7 +171,6 @@
 			buttonAccept: function(){
 
 				if(this.state == constantes.STATE_NEW){
-					// TODO: Crear el objeto datos
 
 					
 					$.ajax({url:baseURL + this.menuChoice,
@@ -179,7 +182,6 @@
 						//TODO: Gestionar los fallos
 					})
 					
-					// TODO: Cuando este hecho, este alert sobra.
 				}
 				else if(this.state == constantes.STATE_UPDATE){
 					// TODO: Se hace un PUT con el objeto
@@ -191,6 +193,7 @@
 			},
 			afterPostHandler(){
 				alert("Elemento creado");
+
 				// TODO: Se fuerza un get en el maestro y se cierra el detail.
 				// Podemos llamar al metodo buttonCancelar.
 			},
@@ -233,7 +236,13 @@
 				this.currentId = datos.Id;
 
 				this.documento = datos; 	
-			}
+			},
+			makeNewDetail: function(){
+				this.makeEmptyData();
+				this.currentId = "";
+				this.state = constantes.STATE_NEW;
+				this.isEditable = true;
+			},
 			
 		}, 
 		mounted(){
@@ -243,6 +252,11 @@
 			else if(this.state == constantes.STATE_NEW){
 				this.makeEmptyData();
 				this.isEditable = true;
+			}
+		},
+		updated(){
+			if(this.state == constantes.STATE_NEW){
+				this.makeNewDetail();
 			}
 		}
 	}
