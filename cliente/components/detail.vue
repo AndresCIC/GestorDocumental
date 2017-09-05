@@ -1,6 +1,6 @@
 <template>
 	<div id="Detail" class="container-fluid">
-		<form id ="FormularioDocumentos" class="mx-auto" style="width: 45%">
+		<div id ="FormularioDocumentos" class="mx-auto" style="width: 45%">
 			<center>
 				<div class="form-group">
 					<button :disabled="this.isEditable" id="enableEditButton" class="btn btn-primary" v-on:click="buttonEnableEdit">Modificar</button>
@@ -43,7 +43,7 @@
 			</div>
 			<div class="checkbox">
 				<label>	<input :disabled="!isEditable" class="checkbox" type="checkbox" v-model="documento.SoloLectura" id="modificableInput" >Solo lectura</label>
-				<label>	<input :disabled="!isEditable" class="checkbox" type="checkbox" v-model="documento.VersionFinal" id="ultimaversionInput" >Última versión</label>
+				<label>	<input :disabled="!isEditable" class="checkbox" type="checkbox" v-model="documento.VersionFinal" id="desarrolloInput" >En desarrollo</label>
 			</div>
 			<center>
 				<div class="form-group">
@@ -52,7 +52,7 @@
 				</div>
 			</center>
 
-		</form>
+		</div>
 	</div>
 </template>
 
@@ -76,6 +76,7 @@
 				},
 				isEditable:false,
 				menuChoice : "Documentos",
+				estaVacio : false
 
 			}
 		},
@@ -84,50 +85,51 @@
 		'currentId'
 		],
 		computed:{
-			computeAcceptButton:{
-				cache: false,
-				get:function(){
-					if(!this.isEditable){
+			computeAcceptButton: function()	{
+				if(!this.isEditable){
+					return  true; 
+				}
+				else if(this.state == constantes.STATE_NEW){
+					/*if(this.documento.Titulo===this.previousDocument.Titulo){
 						return  true; 
 					}
-					else if(this.state == constantes.STATE_NEW){
-						if(this.documento.Titulo==""|| this.documento.Autor==""){
-							return  true; 
-						}
-						else if(this.documento.FechaCreacion == "" || this.documento.FechaUltimoModificado == ""){
-							return  true; 
-						}
-						else if(this.documento.Tipo == "" || this.documento.Tamanio == ""){
-							return  true; 
-						}
-						else{
-							return false;
-						}
+					else if(this.documento.Autor===""){
+						return true;
 					}
-					else if(this.state == constantes.STATE_UPDATE){
-						if(this.documento.Titulo != this.previousDocument.Titulo){
-							return false;
-						}
-						else if(this.documento.Autor != this.previousDocument.Autor){
-							return false;
-						}
-						else if(this.documento.FechaCreacion != this.previousDocument.FechaCreacion){
-							return false;
-						}
-						else if(this.documento.FechaUltimoModificado != this.previousDocument.FechaUltimoModificado){
-							return false;
-						}
-						else if(this.documento.Tipo != this.previousDocument.Tipo){
-							return false;
-						}
-						else if(this.documento.SoloLectura != this.previousDocument.SoloLectura){
-							return false;
-						}
-						else if(this.documento.VersionFinal != this.previousDocument.VersionFinal){
-							return false;
-						}
-						else{return true;}
+					else if(this.documento.Tipo === "" ){
+						return true;
+					} 
+					else if(this.documento.Tamanio === ""){
+						return  true; 
 					}
+					else{
+						return false;
+					}*/
+					return false;
+				}
+				else if(this.state == constantes.STATE_UPDATE){
+					if(this.documento.Titulo != this.previousDocument.Titulo){
+						return false;
+					}
+					else if(this.documento.Autor != this.previousDocument.Autor){
+						return false;
+					}
+					else if(this.documento.FechaCreacion != this.previousDocument.FechaCreacion){
+						return false;
+					}
+					else if(this.documento.FechaUltimoModificado != this.previousDocument.FechaUltimoModificado){
+						return false;
+					}
+					else if(this.documento.Tipo != this.previousDocument.Tipo){
+						return false;
+					}
+					else if(this.documento.SoloLectura != this.previousDocument.SoloLectura){
+						return false;
+					}
+					else if(this.documento.VersionFinal != this.previousDocument.VersionFinal){
+						return false;
+					}
+					else{return true;}
 				}
 			},
 			computeDeleteButton: function(){
@@ -166,25 +168,45 @@
 			},
 			borradoHandler: function(){
 				alert("Elemento borrado correctamente.");
+				this.$emit('makeGet', true);
 				this.makeEmptyData();
 			},
 			buttonAccept: function(){
 
 				if(this.state == constantes.STATE_NEW){
+					let errores = "";
+					if(this.documento.Titulo===""){
+						errores+="El valor de Título está vacío. \n";
+					}
+					if(this.documento.Autor===""){
+						errores+="El valor de Autor está vacío. \n";
+					}
+					if(this.documento.Tipo === "" ){
+						errores+="El valor de Tipo está vacío. \n";
+					} 
+					if(this.documento.Tamanio === ""){
+						errores+="El valor de Tamaño está vacío. \n";
+					}
+					if(errores != ""){
 
-					
-					$.ajax({url:baseURL + this.menuChoice,
-						method:"POST",
-						data: this.documento})	
-					.done(this.afterPostHandler)
-					.fail(function(){
-						alert("Fallo en la creacion del elemento");
+
+						if(confirm(errores +"¿Está seguro de que quiere continuar?")){
+
+
+							$.ajax({url:constantes.BASE_URL + this.menuChoice,
+								method:"POST",
+								data: this.documento})	
+							.done(this.afterPostHandler)
+							.fail(function(){
+								alert("Fallo en la creacion del elemento");
 						//TODO: Gestionar los fallos
-					})
-					
+							})
+						}
+					}
 				}
 				else if(this.state == constantes.STATE_UPDATE){
 					// TODO: Se hace un PUT con el objeto
+
 					$.ajax({url:constantes.BASE_URL + this.menuChoice + "/" + this.currentId,
 						method:"PUT",
 						data: this.documento})
@@ -213,28 +235,31 @@
 				})
 			},
 			makeEmptyData(){
-				this.currentId = "";
-				this.documento.Titulo = "";
-				this.documento.Autor = "";
-				this.documento.FechaCreacion = "";
-				this.documento.FechaUltimoModificado = "";
-				this.documento.Tipo = "";
-				this.documento.Tamanio = "";
-				this.documento.VersionFinal = "";
-				this.documento.SoloLectura = "";
+				if(!this.estaVacio){
+					this.documento = {};
+					this.currentId = "";
+					this.documento.Titulo = "";
+					this.documento.Autor = "";
+					this.documento.FechaCreacion = "";
+					this.documento.FechaUltimoModificado = "";
+					this.documento.Tipo = 0;
+					this.documento.Tamanio = 0;
+					this.documento.VersionFinal = false;
+					this.documento.SoloLectura = false;
 
-				this.previousDocument.Titulo = "";
-				this.previousDocument.Autor = "";
-				this.previousDocument.FechaCreacion = "";
-				this.previousDocument.FechaUltimoModificado = "";
-				this.previousDocument.Tipo = "";
-				this.previousDocument.Tamanio = "";
-				this.previousDocument.VersionFinal = "";
-				this.previousDocument.SoloLectura = "";
+					this.previousDocument={};
+					this.previousDocument.Titulo = "";
+					this.previousDocument.Autor = "";
+					this.previousDocument.FechaCreacion = "";
+					this.previousDocument.FechaUltimoModificado = "";
+					this.previousDocument.Tipo = 0;
+					this.previousDocument.Tamanio = 0;
+					this.previousDocument.VersionFinal = false;
+					this.previousDocument.SoloLectura = false;
+				}
 			},
 			submitGetRequest(datos){
 				this.currentId = datos.Id;
-
 				this.documento = datos; 	
 			},
 			makeNewDetail: function(){
@@ -250,14 +275,15 @@
 				this.makeGetRequest();
 			}
 			else if(this.state == constantes.STATE_NEW){
-				this.makeEmptyData();
+				this.makeEmptyData(); 	
+				this.estaVacio = true;
 				this.isEditable = true;
 			}
 		},
 		updated(){
-			if(this.state == constantes.STATE_NEW){
+		/*	if(this.state == constantes.STATE_NEW){
 				this.makeNewDetail();
-			}
+			}*/
 		}
 	}
 </script>
