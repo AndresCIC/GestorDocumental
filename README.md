@@ -1,0 +1,7 @@
+- Hacer un masterDetail bien
+	- Que cuando abres el nuevo teniendo uno abajo se cierre el de abajo
+	- Que funcione del todo el detail
+	- Validaciones
+	- Coger las fechas siempre del sistema.
+- Una vez tengamos bien un masterDetail, copiar y hacer los demas.
+- Preparar presentación
