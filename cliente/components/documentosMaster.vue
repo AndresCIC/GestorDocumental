@@ -29,7 +29,7 @@
 					</tr>
 					<tr  v-if="item.Id == elegido">
 						<td colspan="6">
-							<detail @cancelDetail = "removeDetail" :currentId = "elegido" :state = "state" role="tabpanel" class="float-right"> </detail>
+							<detail @makeGet= "recargarMaster" @cancelDetail = "removeDetail" :currentId = "elegido" :state = "state" role="tabpanel" class="float-right"> </detail>
 						</td>
 					</tr>
 				</tbody>			    
@@ -72,6 +72,10 @@
 					alert("Ha fallado la carga del objeto");
 				})
 			},
+			recargarMaster: function(){
+				this.removeDetail();
+				this.makeGetListRequest();
+			},
 			removeDetail: function(){
 				this.elegido = "";
 				this.state = "";
@@ -85,6 +89,7 @@
 		  },
 		  getNewDetail: function(){
 		  	this.state = constantes.STATE_NEW;
+		  	this.elegido = "";
 				//this.emitEnableDetailEvent(this.read);
 			},	
 			renderDetail: function(index){
