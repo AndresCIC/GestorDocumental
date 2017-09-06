@@ -85,6 +85,24 @@
 			},
 			submitGetListValues: function(datos){
 				this.lista = datos;
+				this.parseTipo(datos);
+			},
+			parseTipo: function(array){
+				var _this = this;
+				array.forEach(function(element, index) {
+					if(element.Estilo == 1){
+						_this.lista[index].Estilo = "Formal";
+					}
+					else if(element.Estilo == 2){
+						_this.lista[index].Estilo = "Informal";
+					}
+					else if(element.Estilo == 3){
+						_this.lista[index].Estilo = "Libro";
+					}
+					else if(element.Estilo == 4){
+						_this.lista[index].Estilo = "Académico";
+					}
+				});
 			},
 			emitEnableDetailEvent(read) {
 		      // Send the event on a channel () with a payload ()

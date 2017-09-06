@@ -87,7 +87,32 @@
 			},
 			submitGetListValues: function(datos){
 				this.lista = datos;
+				this.parseTipo(datos);
 			},
+			parseTipo: function(array){
+				var _this = this;
+				array.forEach(function(element, index) {
+					if(element.Tipo == 4){
+						_this.lista[index].Tipo = "Texto";
+					}
+					else if(element.Tipo == 1){
+						_this.lista[index].Tipo = "Imagen";
+					}
+					else if(element.Tipo == 2){
+						_this.lista[index].Tipo = "HTML";
+					}
+					else if(element.Tipo == 3){
+						_this.lista[index].Tipo = "Hoja de cálculo";
+					}
+					if(element.SoloLectura){
+						_this.lista[index].SoloLectura = "Si";
+					}
+					else{
+						_this.lista[index].SoloLectura = "No";
+					}
+				});
+			},
+
 			emitEnableDetailEvent(read) {
 		      // Send the event on a channel () with a payload ()
 		      EventBus.$emit('enableDetail', this.read);
