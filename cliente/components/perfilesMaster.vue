@@ -19,7 +19,7 @@
 				<tbody @click="" v-for="(item, index) in lista">
 
 					<tr v-on:click="renderDetail(item.Id)">
-						<th scope="row" v-model='index'>{{index}}</th>
+						<th scope="row" v-model='index'>{{index+1}}</th>
 						<td>{{item.Nombre}}</td>
 						<td>{{item.ExtCorreoE}}</td>
 						<td>{{item.Activo}}</td>

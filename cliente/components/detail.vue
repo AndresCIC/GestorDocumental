@@ -20,12 +20,12 @@
 				<div class="col">
 					<label>Fecha de creación:</label>
 					
-					<input :disabled="!isEditable" class="form-control" type="text" v-model="documento.FechaCreacion" id="creacionInput" ></input>
+					<input :disabled="!isEditable" class="form-control" type="date" v-model="documento.FechaCreacion" id="creacionInput" ></input>
 					
 				</div>
 				<div class="col">
 					<label>Última modificación:</label>
-					<input :disabled="!isEditable" class="form-control" type="text" v-model="documento.FechaUltimoModificado" id="ultimamodificacionInput"></input>
+					<input :disabled="!isEditable" class="form-control" type="date" v-model="documento.FechaUltimoModificado" id="ultimamodificacionInput"></input>
 				</div>
 			</div>
 			<div class="form-group">
