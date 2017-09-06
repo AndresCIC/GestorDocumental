@@ -17,13 +17,13 @@
 				<input :disabled="!isEditable" class="form-control" type="text" v-model="documento.Autor" id="AutorInput" placeholder="Autor"></input>
 			</div>
 			<div class="form-group row">
-				<div class="col-xs-6">
+				<div class="col">
 					<label>Fecha de creación:</label>
 					
 					<input :disabled="!isEditable" class="form-control" type="text" v-model="documento.FechaCreacion" id="creacionInput" ></input>
 					
 				</div>
-				<div class="col-xs-6">
+				<div class="col">
 					<label>Última modificación:</label>
 					<input :disabled="!isEditable" class="form-control" type="text" v-model="documento.FechaUltimoModificado" id="ultimamodificacionInput"></input>
 				</div>
