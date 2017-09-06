@@ -1,39 +1,37 @@
 <template>
-	<div id="documentosMaster">
+	<div id="plantillasMaster">
 		<table class="table">
 			<table class="table table-hover" role="tablist">
 				<thead>
 					<tr>
 						<th>#</th>
 						<th>Nombre</th>
-						<th>Autor</th>
-						<th>Tipo</th>
-						<th>Precio</th>
+						<th>Extensión</th>
+						<th>Activo</th>
 						<th> <i class="fa fa-user-plus" aria-hidden="true" v-on:click="getNewDetail()"></i> </a></th>
 					</tr>
 				</thead>			
 				<tr  v-if="computeShowNewDetail">
 					<td colspan="6">
-						<detail @cancelDetail ="removeDetail" :currentId = "elegido" :state ="state" role="tabpanel" class="float-right"> </detail>
+						<detail @cancelDetail ="removeDetail" @forceUpdate = "forceUpdate" :currentId = "elegido" :state ="state" role="tabpanel" class="float-right"> </detail>
 					</td>
 				</tr>
 				<tbody @click="" v-for="(item, index) in lista">
 
 					<tr v-on:click="renderDetail(item.Id)">
 						<th scope="row" v-model='index'>{{index}}</th>
-						<td>{{item.Titulo}}</td>
-						<td>{{item.Titulo}}</td>
-						<td>{{item.Tipo}}</td>
-						<td>{{item.SoloLectura}}</td>
+						<td>{{item.Nombre}}</td>
+						<td>{{item.ExtCorreoE}}</td>
+						<td>{{item.Activo}}</td>
 
 					</tr>
-					</tbody>
 					<tr  v-if="item.Id == elegido">
 						<td colspan="6">
-							<detail @makeGet= "recargarMaster" @cancelDetail = "removeDetail" :currentId = "elegido" :state = "state" role="tabpanel" class="float-right"> </detail>
+							<detail @makeGet= "recargarMaster" @forceUpdate = "forceUpdate" @cancelDetail = "removeDetail" :currentId = "elegido" :state = "state" role="tabpanel" class="float-right"> </detail>
 						</td>
 					</tr>
-							    
+					
+				</tbody>
 
 			</table>
 			
@@ -44,14 +42,14 @@
 	import constantes from './constants.js';
 	import detail from './detail.vue'
 	export default{
-		name: "Documentos",
+		name: "Plantillas",
 		components:{
 			detail,
 		},
 		data (){
 			return{
 				lista: [],
-				menuChoice:"Documentos",
+				menuChoice:"Plantillas",
 				state: "",
 				elegido : "",
 
@@ -72,6 +70,10 @@
 				.fail(function(){
 					alert("Ha fallado la carga del objeto");
 				})
+			},
+			forceUpdate: function(){
+				this.removeDetail();
+				this.makeGetListRequest();
 			},
 			recargarMaster: function(){
 				this.removeDetail();
