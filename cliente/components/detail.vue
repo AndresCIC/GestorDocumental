@@ -41,6 +41,9 @@
 					<option value=4>Hoja de cálculo</option>
 				</select>
 			</div>
+			<div v-if="this.state==0" class="form-group">
+				<input id="input-1a" type="file" class="file" data-show-preview="false">
+			</div>
 			<div class="checkbox">
 				<label>	<input :disabled="!isEditable" class="checkbox" type="checkbox" v-model="documento.SoloLectura" id="modificableInput" >Solo lectura</label>
 				<label>	<input :disabled="!isEditable" class="checkbox" type="checkbox" v-model="documento.VersionFinal" id="desarrolloInput" >En desarrollo</label>
