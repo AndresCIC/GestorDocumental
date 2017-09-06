@@ -20,12 +20,12 @@
 				<div class="col-xs-6">
 					<label>Fecha de creación:</label>
 					
-					<input :disabled="!isEditable" class="form-control" type="date" v-model="documento.FechaCreacion" id="creacionInput" ></input>
+					<input :disabled="!isEditable" class="form-control" type="text" v-model="documento.FechaCreacion" id="creacionInput" ></input>
 					
 				</div>
 				<div class="col-xs-6">
 					<label>Última modificación:</label>
-					<input :disabled="!isEditable" class="form-control" type="date" v-model="documento.FechaUltimoModificado" id="ultimamodificacionInput"></input>
+					<input :disabled="!isEditable" class="form-control" type="text" v-model="documento.FechaUltimoModificado" id="ultimamodificacionInput"></input>
 				</div>
 			</div>
 			<div class="form-group">
@@ -35,10 +35,10 @@
 			<div class="form-group">
 				<label>Tipo:</label>
 				<select v-model="documento.Tipo" class="form-control" :disabled="!isEditable">
-					<option value=0>Texto</option>
-					<option value=1>Imagen</option>
-					<option value=2>HTML</option>
-					<option value=3>Hoja de cálculo</option>
+					<option value=1>Texto</option>
+					<option value=2>Imagen</option>
+					<option value=3>HTML</option>
+					<option value=4>Hoja de cálculo</option>
 				</select>
 			</div>
 			<div class="checkbox">
@@ -123,6 +123,9 @@
 					else if(this.documento.Tipo != this.previousDocument.Tipo){
 						return false;
 					}
+					else if(this.documento.Tamanio != this.previousDocument.Tamanio){
+						return false;
+					}
 					else if(this.documento.SoloLectura != this.previousDocument.SoloLectura){
 						return false;
 					}
@@ -159,11 +162,7 @@
 				}
 			},
 			buttonCancelar: function(){
-				// TODO: Cancel method
 				this.$emit('cancelDetail', true);
-				// Envia un eventbus o un emit al master para que cierre el detail
-
-				// Habrá que poner una variable a "" o algo.
 
 			},
 			borradoHandler: function(){
@@ -181,28 +180,34 @@
 					if(this.documento.Autor===""){
 						errores+="El valor de Autor está vacío. \n";
 					}
-					if(this.documento.Tipo === "" ){
-						errores+="El valor de Tipo está vacío. \n";
+					if(this.documento.FechaCreacion === "")
+					{
+						errores+="El valor de Fecha de Creación está vacío. \n";
+					}
+					if(this.documento.FechaUltimoModificado === "")
+					{
+						errores+="El valor de Última Modificación está vacío. \n";
+					}
+					if(this.documento.Tipo === 0){
+						errores+="El valor de Tipo no es correcto. \n";	
 					} 
-					if(this.documento.Tamanio === ""){
-						errores+="El valor de Tamaño está vacío. \n";
+					if(this.documento.Tamanio === 0){
+						errores+="El valor de Tamaño es 0. \n";
 					}
 					if(errores != ""){
-
-
-						if(confirm(errores +"¿Está seguro de que quiere continuar?")){
-
-
-							$.ajax({url:constantes.BASE_URL + this.menuChoice,
-								method:"POST",
-								data: this.documento})	
-							.done(this.afterPostHandler)
-							.fail(function(){
-								alert("Fallo en la creacion del elemento");
-						//TODO: Gestionar los fallos
-							})
-						}
+						alert("Hay campos no rellenados. No se puede crear el objeto:\n" + errores);
 					}
+					else{
+						$.ajax({url:constantes.BASE_URL + this.menuChoice,
+							method:"POST",
+							data: this.documento})	
+						.done(this.afterPostHandler)
+						.fail(function(){
+							alert("Fallo en la creacion del elemento");
+						//TODO: Gestionar los fallos
+					})
+					}
+
 				}
 				else if(this.state == constantes.STATE_UPDATE){
 					// TODO: Se hace un PUT con el objeto
@@ -215,13 +220,15 @@
 			},
 			afterPostHandler(){
 				alert("Elemento creado");
+				this.$emit('forceUpdate', true);
 
 				// TODO: Se fuerza un get en el maestro y se cierra el detail.
 				// Podemos llamar al metodo buttonCancelar.
 			},
 			putSubmitData(){
-				alert("PUT realizado");
+				alert("Elemento modificado");
 				this.previousDocument = $.extend({}, this.documento);
+				this.$emit('forceUpdate', true);
 
 			}, 	
 			makeGetRequest(){

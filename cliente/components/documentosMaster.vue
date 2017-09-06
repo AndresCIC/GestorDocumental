@@ -14,7 +14,7 @@
 				</thead>			
 				<tr  v-if="computeShowNewDetail">
 					<td colspan="6">
-						<detail @cancelDetail ="removeDetail" :currentId = "elegido" :state ="state" role="tabpanel" class="float-right"> </detail>
+						<detail @cancelDetail ="removeDetail" @forceUpdate = "forceUpdate" :currentId = "elegido" :state ="state" role="tabpanel" class="float-right"> </detail>
 					</td>
 				</tr>
 				<tbody @click="" v-for="(item, index) in lista">
@@ -29,7 +29,7 @@
 					</tr>
 					<tr  v-if="item.Id == elegido">
 						<td colspan="6">
-							<detail @makeGet= "recargarMaster" @cancelDetail = "removeDetail" :currentId = "elegido" :state = "state" role="tabpanel" class="float-right"> </detail>
+							<detail @makeGet= "recargarMaster" @forceUpdate = "forceUpdate" @cancelDetail = "removeDetail" :currentId = "elegido" :state = "state" role="tabpanel" class="float-right"> </detail>
 						</td>
 					</tr>
 				</tbody>			    
@@ -71,6 +71,10 @@
 				.fail(function(){
 					alert("Ha fallado la carga del objeto");
 				})
+			},
+			forceUpdate: function(){
+				this.removeDetail();
+				this.makeGetListRequest();
 			},
 			recargarMaster: function(){
 				this.removeDetail();
