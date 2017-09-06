@@ -6,8 +6,8 @@
 					<tr>
 						<th>#</th>
 						<th>Nombre</th>
-						<th>Extensión</th>
-						<th>Activo</th>
+						<th>Estilo</th>
+						<th>Precio</th>
 						<th> <i class="fa fa-user-plus" aria-hidden="true" v-on:click="getNewDetail()"></i> </a></th>
 					</tr>
 				</thead>			
@@ -21,8 +21,8 @@
 					<tr v-on:click="renderDetail(item.Id)">
 						<th scope="row" v-model='index'>{{index}}</th>
 						<td>{{item.Nombre}}</td>
-						<td>{{item.ExtCorreoE}}</td>
-						<td>{{item.Activo}}</td>
+						<td>{{item.Estilo}}</td>
+						<td>{{item.Precio}}</td>
 
 					</tr>
 					<tr  v-if="item.Id == elegido">
@@ -40,7 +40,7 @@
 </template>
 <script type="text/javascript">
 	import constantes from './constants.js';
-	import detail from './detailPlantillas.vue'
+	import detail from './detail.vue'
 	export default{
 		name: "Plantillas",
 		components:{
