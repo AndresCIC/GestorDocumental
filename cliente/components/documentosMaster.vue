@@ -27,7 +27,7 @@
 						<td>{{item.SoloLectura}}</td>
 
 					</tr>
-					<tr  v-if="item.Id == elegido">
+					<tr id="detail-tr" v-if="item.Id == elegido">
 						<td colspan="6">
 							<detail @makeGet= "recargarMaster" @forceUpdate = "forceUpdate" @cancelDetail = "removeDetail" :currentId = "elegido" :state = "state" role="tabpanel" class="float-right"> </detail>
 						</td>
@@ -120,4 +120,10 @@
 	},
 }
 </script>
-<style type="text/css"></style>
+<style type="text/css">
+	#detail-tr:hover{
+		background-color: white;
+	}
+
+
+</style>
