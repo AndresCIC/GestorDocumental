@@ -40,7 +40,7 @@
 </template>
 <script type="text/javascript">
 	import constantes from './constants.js';
-	import detail from './detail.vue'
+	import detail from './perfilesDetail.vue'
 	export default{
 		name: "Perfiles",
 		components:{
