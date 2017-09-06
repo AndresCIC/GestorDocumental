@@ -40,16 +40,16 @@
 </template>
 <script type="text/javascript">
 	import constantes from './constants.js';
-	import detail from './detailPlantillas.vue'
+	import detail from './detail.vue'
 	export default{
-		name: "Plantillas",
+		name: "Perfiles",
 		components:{
 			detail,
 		},
 		data (){
 			return{
 				lista: [],
-				menuChoice:"Plantillas",
+				menuChoice:"PerfilesUsuarios",
 				state: "",
 				elegido : "",
 
