@@ -32,7 +32,8 @@
 							<detail @makeGet= "recargarMaster" @forceUpdate = "forceUpdate" @cancelDetail = "removeDetail" :currentId = "elegido" :state = "state" role="tabpanel" class="float-right"> </detail>
 						</td>
 					</tr>
-				</tbody>			    
+					
+				</tbody>
 
 			</table>
 			
