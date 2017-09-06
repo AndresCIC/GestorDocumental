@@ -22,7 +22,7 @@
 					<tr v-on:click="renderDetail(item.Id)">
 						<th scope="row" v-model='index'>{{index}}</th>
 						<td>{{item.Titulo}}</td>
-						<td>{{item.Titulo}}</td>
+						<td>{{item.FechaUltimoModificado}}</td>
 						<td>{{item.Tipo}}</td>
 						<td>{{item.SoloLectura}}</td>
 
