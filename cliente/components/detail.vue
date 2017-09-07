@@ -35,14 +35,15 @@
 			<div class="form-group">
 				<label>Tipo:</label>
 				<select v-model="documento.Tipo" class="form-control" :disabled="!isEditable">
-					<option value=1>Texto</option>
+					<option value=1>Texto plano</option>
 					<option value=2>Imagen</option>
-					<option value=3>HTML</option>
+					<option value=3>PDF</option>
 					<option value=4>Hoja de cálculo</option>
+					<option value=5>Documento de Word</option>
 				</select>
 			</div>
 			<div v-if="this.state==0">
-		  		<input id="input-1a" type="file" class="file" data-show-preview="false">
+				<input id="input-1a" type="file" class="file" data-show-preview="false">
 			</div>
 			<div class="checkbox">
 				<label>	<input :disabled="!isEditable" class="checkbox" type="checkbox" v-model="documento.SoloLectura" id="modificableInput" >Solo lectura</label>
@@ -187,7 +188,7 @@
 					{
 						errores+="El valor de Fecha de Creación está vacío. \n";
 					}
-					if(this.documento.FechaUltimoModificado === "")
+					if(this.documento.FechaUltimoModificado === "" )
 					{
 						errores+="El valor de Última Modificación está vacío. \n";
 					}
@@ -315,4 +316,6 @@
 	}
 </script>
 
-<style></style>
+<style>
+
+</style>

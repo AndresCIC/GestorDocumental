@@ -16,7 +16,9 @@
 		</div>
 		<hr>
 		<div class="row">
+		<keep-alive>
 			<component :is="currentView" class="col-12"></component>
+			</keep-alive>
 
 		</div>
 	</div>

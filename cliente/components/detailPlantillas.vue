@@ -28,10 +28,11 @@
 			<div class="form-group">
 				<label>Tipo:</label>
 				<select v-model="plantilla.Tipo" class="form-control" :disabled="!isEditable">
-					<option value=1>Texto</option>
+					<option value=1>Texto plano</option>
 					<option value=2>Imagen</option>
-					<option value=3>HTML</option>
+					<option value=3>PDF</option>
 					<option value=4>Hoja de cálculo</option>
+					<option value=5>Documento de Word</option>
 				</select>
 			</div>
 			<label>	<input :disabled="!isEditable" class="checkbox" type="checkbox" v-model="plantilla.Accesibilidad" id="AccesibilidadInput" >Accesibilidad</label>

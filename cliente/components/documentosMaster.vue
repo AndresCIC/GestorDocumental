@@ -104,6 +104,9 @@
 					else if(element.Tipo == 3){
 						_this.lista[index].Tipo = "Hoja de cálculo";
 					}
+					else if(element.Tipo == 5){
+						_this.lista[index].Tipo = "Documento de Word";
+					}
 					if(element.SoloLectura){
 						_this.lista[index].SoloLectura = "Si";
 					}
