@@ -71,6 +71,17 @@
 					alert("Ha fallado la carga del objeto");
 				})
 			},
+			parseTipo: function(array){
+				var _this = this;
+				array.forEach(function(element, index) {
+					if(element.Activo == true){
+						_this.lista[index].Activo = "Si";
+					}
+					else{
+						_this.lista[index].Activo = "No";
+					}
+				});
+			},
 			forceUpdate: function(){
 				this.removeDetail();
 				this.makeGetListRequest();
@@ -85,6 +96,7 @@
 			},
 			submitGetListValues: function(datos){
 				this.lista = datos;
+				this.parseTipo(datos);
 			},
 			emitEnableDetailEvent(read) {
 		      // Send the event on a channel () with a payload ()
